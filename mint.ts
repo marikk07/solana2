@@ -1,12 +1,3 @@
-/**
- *
- * Solana pushed breaking changes to some transaction elements in October, 2022 to implement Versioned Transactions.
- * A newer version of this code supporting versioned transactions is available here:
- * https://github.com/quiknode-labs/qn-guide-examples/blob/main/solana/fungible-SPL-token/mintVersionedTest.ts
- * For more information on versioned transactions, please visit:
- * https://www.quicknode.com/guides/solana-development/how-to-use-versioned-transactions-on-solana
- */
-
 import { Transaction, SystemProgram, Keypair, Connection, PublicKey, sendAndConfirmTransaction } from "@solana/web3.js";
 import { MINT_SIZE, TOKEN_PROGRAM_ID, createInitializeMintInstruction, getMinimumBalanceForRentExemptMint, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createMintToInstruction } from '@solana/spl-token';
 import { DataV2, CreateMetadataAccountV3InstructionData } from '@metaplex-foundation/mpl-token-metadata';
@@ -34,13 +25,16 @@ const MY_TOKEN_METADATA: UploadMetadataInput = {
     description: "This is a test token!",
     image: "https://URL_TO_YOUR_IMAGE.png" //add public URL to image you'd like to use
 }
-const ON_CHAIN_METADATA: DataV2 | null = {
+const ON_CHAIN_METADATA: DataV2 = {
     name: "Test Token",
     symbol: "TEST",
     uri: 'TO_UPDATE_LATER',
     sellerFeeBasisPoints: 0,
+    // @ts-ignore
     creators: null,
+    // @ts-ignore
     collection: null,
+    // @ts-ignore
     uses: null,
 };
 
@@ -93,6 +87,7 @@ const createNewMintTransaction = async (connection: Connection, payer: Keypair, 
             mintAuthority, //Authority
             MINT_CONFIG.numberTokens * Math.pow(10, MINT_CONFIG.numDecimals),//number of tokens
         ),
+        // @ts-ignore
         CreateMetadataAccountV3InstructionData({
             metadata: metadataPDA,
             mint: mintKeypair.publicKey,
