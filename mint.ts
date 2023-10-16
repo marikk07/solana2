@@ -2,11 +2,16 @@ import { Transaction, SystemProgram, Keypair, Connection, PublicKey, sendAndConf
 import { MINT_SIZE, TOKEN_PROGRAM_ID, createInitializeMintInstruction, getMinimumBalanceForRentExemptMint, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createMintToInstruction } from '@solana/spl-token';
 import { DataV2, createCreateMetadataAccountV3Instruction } from '@metaplex-foundation/mpl-token-metadata';
 import { bundlrStorage, keypairIdentity, Metaplex, UploadMetadataInput } from '@metaplex-foundation/js';
-import secret from './guideSecret.json';
+// import secret from './guideSecret.json';
+import bs58 from 'bs58';
 
 const endpoint = 'https://aged-few-gas.solana-devnet.quiknode.pro/709859f8e8b4d80991023ddd417b320d0e139e84/'; //Replace with your RPC Endpoint
 const solanaConnection = new Connection(clusterApiUrl("devnet"));//new Connection(endpoint);
-const userWallet = Keypair.fromSecretKey(new Uint8Array(secret));
+
+const secretKey = "5PSAw83j32BC4MP95Vkrc7SgbezQw6h6Z68ekrUphBzexXaedzgB5XBHx7Ghvp6WZMxZ6BUAqPi1zkXxCjVoDF3k";
+
+const userWallet = Keypair.fromSecretKey(
+    bs58.decode(secretKey));//Keypair.fromSecretKey(new Uint8Array(secret));
 const metaplex = Metaplex.make(solanaConnection)
     .use(keypairIdentity(userWallet))
     .use(bundlrStorage({
@@ -107,7 +112,8 @@ const createNewMintTransaction = async (connection: Connection, payer: Keypair, 
 
 const main = async () => {
     console.log(`---STEP 1: Uploading MetaData---`);
-    const userWallet = Keypair.fromSecretKey(new Uint8Array(secret));
+    const userWallet =  Keypair.fromSecretKey(
+        bs58.decode(secretKey));//Keypair.fromSecretKey(new Uint8Array(secret));
     let metadataUri = await uploadMetadata(MY_TOKEN_METADATA);
     ON_CHAIN_METADATA.uri = metadataUri;
 

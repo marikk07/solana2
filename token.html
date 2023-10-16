@@ -7,6 +7,10 @@
     <style>
         /* You can add your CSS styles here */
     </style>
+    <script src="mint.ts" type="module">
+
+    </script>
+
 </head>
 <body>
 <h1>Demo Token Creation</h1>
@@ -36,16 +40,17 @@
     <button id="viewButton">View on Solscan</button>
 </div>
 
-<script src="mint.ts">
+<script type="module">
+
     // You can add JavaScript functionality here
-    document.getElementById("createButton").addEventListener("click", async function () {
+    document.getElementById("createButton").addEventListener("click", function () {
         // Handle create button click event
         const name = document.getElementById("name").value;
         const code = document.getElementById("code").value;
 
         // Call your createMint function with name and code
         // await createMint(name, code);
-        await main()
+        main()
     });
 
     document.getElementById("mintButton").addEventListener("click", async function() {
@@ -60,7 +65,7 @@
 
     document.getElementById("viewButton").addEventListener("click", function() {
         // Define the Solscan URL for your token
-        // const solscanUrl = `https://solscan.io/token/${tokenAddress}`;
+        const solscanUrl = `https://solscan.io/token/${tokenAddress}`;
 
         // Open Solscan in a new tab/window
         window.open(solscanUrl, "_blank");
