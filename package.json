@@ -12,7 +12,7 @@
   "description": "",
   "dependencies": {
     "@metaplex-foundation/js": "^0.19.5",
-    "@metaplex-foundation/mpl-token-metadata": "^3.1.0",
+    "@metaplex-foundation/mpl-token-metadata": "2.2.0",
     "@solana/spl-token": "^0.3.8",
     "@solana/web3.js": "^1.87.1"
   }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Management</title>
+    <style>
+        /* You can add your CSS styles here */
+    </style>
+</head>
+<body>
+<h1>Demo Token Creation</h1>
+
+<div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" placeholder="Enter name">
+</div>
+
+<div>
+    <label for="code">Code:</label>
+    <input type="text" id="code" placeholder="Enter code">
+</div>
+
+<div>
+    <button id="createButton">Create</button>
+</div>
+
+<div>
+    <label for="amount">Enter Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+</div>
+
+<div>
+    <button id="mintButton">Mint</button>
+    <button id="burnButton">Burn</button>
+    <button id="viewButton">View on Solscan</button>
+</div>
+
+<script src="mint.ts">
+    // You can add JavaScript functionality here
+    document.getElementById("createButton").addEventListener("click", async function () {
+        // Handle create button click event
+        const name = document.getElementById("name").value;
+        const code = document.getElementById("code").value;
+
+        // Call your createMint function with name and code
+        // await createMint(name, code);
+        await main()
+    });
+
+    document.getElementById("mintButton").addEventListener("click", async function() {
+        /**
+         * await startMint(20)
+         */
+    });
+
+    document.getElementById("burnButton").addEventListener("click", async function() {
+        // await burn(20)
+    });
+
+    document.getElementById("viewButton").addEventListener("click", function() {
+        // Define the Solscan URL for your token
+        // const solscanUrl = `https://solscan.io/token/${tokenAddress}`;
+
+        // Open Solscan in a new tab/window
+        window.open(solscanUrl, "_blank");
+    });
+</script>
+</body>
+</html>

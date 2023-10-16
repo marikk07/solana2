@@ -1,11 +1,11 @@
-import { Transaction, SystemProgram, Keypair, Connection, PublicKey, sendAndConfirmTransaction } from "@solana/web3.js";
+import { Transaction, SystemProgram, Keypair, Connection, PublicKey, sendAndConfirmTransaction, clusterApiUrl } from "@solana/web3.js";
 import { MINT_SIZE, TOKEN_PROGRAM_ID, createInitializeMintInstruction, getMinimumBalanceForRentExemptMint, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createMintToInstruction } from '@solana/spl-token';
-import { DataV2, CreateMetadataAccountV3InstructionData } from '@metaplex-foundation/mpl-token-metadata';
+import { DataV2, createCreateMetadataAccountV3Instruction } from '@metaplex-foundation/mpl-token-metadata';
 import { bundlrStorage, keypairIdentity, Metaplex, UploadMetadataInput } from '@metaplex-foundation/js';
 import secret from './guideSecret.json';
 
 const endpoint = 'https://aged-few-gas.solana-devnet.quiknode.pro/709859f8e8b4d80991023ddd417b320d0e139e84/'; //Replace with your RPC Endpoint
-const solanaConnection = new Connection(endpoint);
+const solanaConnection = new Connection(clusterApiUrl("devnet"));//new Connection(endpoint);
 const userWallet = Keypair.fromSecretKey(new Uint8Array(secret));
 const metaplex = Metaplex.make(solanaConnection)
     .use(keypairIdentity(userWallet))
@@ -20,14 +20,14 @@ const MINT_CONFIG = {
     numberTokens: 1337
 }
 const MY_TOKEN_METADATA: UploadMetadataInput = {
-    name: "Test Token",
-    symbol: "TEST",
-    description: "This is a test token!",
-    image: "https://URL_TO_YOUR_IMAGE.png" //add public URL to image you'd like to use
+    name: "Marikk Token",
+    symbol: "MkkT",
+    description: "This is my first tok!",
+    image: "https://images.ctfassets.net/q5ulk4bp65r7/45uk7WZNNBGCHOwlNaGCT4/a4c8897e2cae08e4f42bf56ca6e3ba4b/solona.png" //add public URL to image you'd like to use
 }
 const ON_CHAIN_METADATA: DataV2 = {
-    name: "Test Token",
-    symbol: "TEST",
+    name: "Marikk Token",
+    symbol: "MkkT",
     uri: 'TO_UPDATE_LATER',
     sellerFeeBasisPoints: 0,
     // @ts-ignore
@@ -37,7 +37,6 @@ const ON_CHAIN_METADATA: DataV2 = {
     // @ts-ignore
     uses: null,
 };
-
 
 /**
  *
@@ -87,8 +86,8 @@ const createNewMintTransaction = async (connection: Connection, payer: Keypair, 
             mintAuthority, //Authority
             MINT_CONFIG.numberTokens * Math.pow(10, MINT_CONFIG.numDecimals),//number of tokens
         ),
-        // @ts-ignore
-        CreateMetadataAccountV3InstructionData({
+
+        createCreateMetadataAccountV3Instruction({
             metadata: metadataPDA,
             mint: mintKeypair.publicKey,
             mintAuthority: mintAuthority,
